@@ -8,13 +8,13 @@ app = FastAPI()
 
 
 @app.on_event("startup")
-def start_mongo():
+def start_and_connect_mongo():
     run(["docker-compose", "up", "-d"])
     mongoengine.connect()
 
 
 @app.on_event("shutdown")
-def start_mongo():
+def disconnect_and_stop_mongo():
     mongoengine.disconnect()
     run(["docker-compose", "down"])
 
